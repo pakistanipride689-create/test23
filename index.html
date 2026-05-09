@@ -86,13 +86,29 @@ to { transform: translateY(0); opacity: 1; }
             gap: 0.5rem;
         }
 
-        .brand-logo { width: 65px;
-            height: 65px; }
+                @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .brand-logo {
+            width: 85px;
+            height: 85px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 14px;
+            padding: 6px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            animation: logoFloat 3s ease-in-out infinite;
+        }
         
         .brand-logo img {
-            width: 75px;
-            height: 75px;
+            width: 100%; height: 100%;
             object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
         }
 
         .logo-text {
@@ -335,8 +351,24 @@ to { opacity: 1; transform: translateY(0) scale(1); }
         /* Responsive */
         @media (max-width: 480px) {
             header { padding: 0.75rem; }
-            .brand-logo { width: 65px;
-            height: 65px; }
+                    @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .brand-logo {
+            width: 85px;
+            height: 85px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 14px;
+            padding: 6px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            animation: logoFloat 3s ease-in-out infinite;
+        }
             .logo-text h1 { font-size: 1.3rem; letter-spacing: 2px; }
             .logo-text p { font-size: 0.6rem; letter-spacing: 1px; }
             .bg-pattern {
