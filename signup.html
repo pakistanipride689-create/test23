@@ -63,7 +63,7 @@
         }
 
         header {
-            padding: 1.5rem 1rem;
+            padding: 1rem 1.5rem;
             background: transparent;
             border-bottom: 1px solid var(--border-color);
             animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -74,7 +74,7 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
-        .header-inner {
+                .header-inner {
             max-width: 720px;
             margin: 0 auto;
             display: flex;
@@ -83,21 +83,11 @@
             gap: 0.5rem;
         }
 
-        .brand-logo { width: 65px;
-            height: 65px; }
-
-        @keyframes logoFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-        
         .brand-logo img {
             width: 75px;
             height: 75px;
             object-fit: contain;
         }
-
-        .logo-text { text-align: center; }
 
         .logo-text h1 {
             font-family: 'Poppins', sans-serif;
@@ -116,7 +106,7 @@
             text-align: center;
         }
 
-        .signup-section {
+.signup-section {
             flex: 1;
             display: flex;
             align-items: center;
@@ -131,8 +121,6 @@
             border-radius: 24px;
             padding: 1.5rem;
             max-width: 320px;
-            width: 92%;
-            margin: 0 auto;
             width: 92%;
             margin: 0 auto;
             box-shadow: 0 25px 80px var(--shadow),
@@ -208,11 +196,18 @@
             background-repeat: no-repeat;
             background-position: right 1rem center;
             padding-right: 2.5rem;
+            color: var(--text-primary);
         }
 
         .form-select option {
             background: var(--secondary-bg);
             color: var(--text-primary);
+            font-size: 0.95rem;
+            padding: 0.5rem;
+        }
+
+        .form-select option:first-child {
+            color: var(--text-muted);
         }
 
         .signup-btn {
@@ -382,10 +377,6 @@
             .form-card, .login-container, .signup-container, .dashboard-card {
                 max-width: 300px;
                 width: 90%;
-            }
-        }
-            .signup-container {
-                max-width: 320px;
             }
         }
     </style>
@@ -603,8 +594,5 @@
             });
         }
     </script>
-</body>
-</html>
-t>
 </body>
 </html>
