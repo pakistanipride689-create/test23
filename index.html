@@ -69,15 +69,18 @@
 
         /* Header - Transparent with tyre background */
         header {
-            padding: 1rem 1.5rem;
+            padding: 1.5rem 1rem;
             background: transparent;
             border-bottom: 1px solid var(--border-color);
             animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-to { transform: translateY(0); opacity: 1; }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .logo-container {
+        .header-inner {
             max-width: 720px;
             margin: 0 auto;
             display: flex;
@@ -86,29 +89,18 @@ to { transform: translateY(0); opacity: 1; }
             gap: 0.5rem;
         }
 
-                @keyframes logoFloat {
+        .brand-logo { width: 65px;
+            height: 65px; }
+
+        @keyframes logoFloat {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-5px); }
         }
-
-        .brand-logo {
-            width: 85px;
-            height: 85px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 14px;
-            padding: 6px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            animation: logoFloat 3s ease-in-out infinite;
-        }
         
         .brand-logo img {
-            width: 100%; height: 100%;
+            width: 75px;
+            height: 75px;
             object-fit: contain;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
         }
 
         .logo-text {
@@ -119,17 +111,17 @@ to { transform: translateY(0); opacity: 1; }
             font-family: 'Poppins', sans-serif;
             font-size: 1.5rem;
             font-weight: 800;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             color: var(--text-primary);
-            
+            text-align: center;
         }
 
         .logo-text p {
             font-size: 0.7rem;
             color: var(--text-secondary);
-            font-weight: 500;
             letter-spacing: 2px;
             text-transform: uppercase;
+            text-align: center;
         }
 
         /* Login Section */
@@ -156,7 +148,10 @@ to { transform: translateY(0); opacity: 1; }
                         0 0 0 1px rgba(255, 255, 255, 0.5);
             animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
         }
-to { opacity: 1; transform: translateY(0) scale(1); }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .login-header {
@@ -295,7 +290,10 @@ to { opacity: 1; transform: translateY(0) scale(1); }
             display: block;
             animation: shake 0.5s ease;
         }
-25% { transform: translateX(-8px); }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
             75% { transform: translateX(8px); }
         }
 
@@ -351,24 +349,8 @@ to { opacity: 1; transform: translateY(0) scale(1); }
         /* Responsive */
         @media (max-width: 480px) {
             header { padding: 0.75rem; }
-                    @keyframes logoFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        .brand-logo {
-            width: 85px;
-            height: 85px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 14px;
-            padding: 6px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            animation: logoFloat 3s ease-in-out infinite;
-        }
+            .brand-logo { width: 65px;
+            height: 65px; }
             .logo-text h1 { font-size: 1.3rem; letter-spacing: 2px; }
             .logo-text p { font-size: 0.6rem; letter-spacing: 1px; }
             .bg-pattern {
@@ -450,7 +432,7 @@ to { opacity: 1; transform: translateY(0) scale(1); }
     
     <div class="container">
         <header>
-            <div class="logo-container">
+            <div class="header-inner">
                 <div class="brand-logo">
                     <img src="logo.png" alt="STPL Logo">
                 </div>
