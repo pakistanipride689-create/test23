@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1A1A1A">
+    <meta name="description" content="STPL - Service Tyre Private Limited Complaint Management System">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="STPL CMS">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <title>Login - STPL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #FFFFFF;
+            --secondary-bg: #F5F5F5;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --accent-color: #1A1A1A;
+            --accent-hover: #333333;
+            --text-primary: #1A1A1A;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #DC2626;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background Image - Tyre Pattern */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: url('Gemini_Generated_Image_5sr3gj5sr3gj5sr3.png') repeat-y left center;
+            background-size: 150px auto;
+            background-color: #FFFFFF;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header - Transparent with tyre background */
+        header {
+            padding: 1.5rem 1rem;
+            background: transparent;
+            border-bottom: 1px solid var(--border-color);
+            animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .brand-logo { width: 65px;
+            height: 65px; }
+50% { transform: translateY(-5px); }
+        }
+        
+        .brand-logo img {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            text-align: center;
+        }
+
+        .logo-text h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: var(--text-primary);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 3px;
+            margin-top: 0.25rem;
+            text-transform: uppercase;
+        }
+
+        /* Login Section */
+        .login-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+        }
+
+        .login-container {
+            background: var(--card-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 1.5rem;
+            max-width: 320px;
+            width: 92%;
+            margin: 0 auto;
+            width: 92%;
+            margin: 0 auto;
+            box-shadow: 0 25px 80px var(--shadow),
+                        0 0 0 1px rgba(255, 255, 255, 0.5);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.5px;
+        }
+
+        .required {
+            color: var(--error);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            background: rgba(245, 245, 245, 0.8);
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+            background: #FFFFFF;
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-input:disabled,
+        .form-select:disabled {
+            background: rgba(245, 245, 245, 0.5);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 38px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+            font-size: 1rem;
+            padding: 4px;
+        }
+
+        .password-toggle:hover {
+            color: var(--accent-color);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
+            border: none;
+            border-radius: 12px;
+            color: #FFFFFF;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(26, 26, 26, 0.2);
+            margin-top: 0.5rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(26, 26, 26, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .error-message,
+        .success-message {
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .error-message {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            color: var(--error);
+        }
+
+        .success-message {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--success);
+        }
+
+        .error-message.active,
+        .success-message.active {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 1.25rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .signup-link a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        .info-message {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: var(--warning);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            display: none;
+            font-weight: 500;
+        }
+
+        .info-message.active {
+            display: block;
+        }
+
+        /* Footer - Transparent with tyre background */
+        
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        
+
+        
+
+        
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            header { padding: 0.75rem; }
+            .brand-logo { width: 65px;
+            height: 65px; }
+            .logo-text h1 { font-size: 1.3rem; letter-spacing: 2px; }
+            .logo-text p { font-size: 0.6rem; letter-spacing: 1px; }
+            .bg-pattern {
+                background-size: 80px auto;
+            }
+            .form-card, .login-container, .signup-container, .dashboard-card {
+                max-width: 260px !important;
+                width: 88% !important;
+                padding: 1rem !important;
+                border-radius: 14px !important;
+            }
+            .form-input, .form-select, .login-btn, .signup-btn, .submit-btn, .btn-submit {
+                padding: 0.6rem 0.75rem !important;
+                font-size: 0.85rem !important;
+            }
+            .form-label {
+                font-size: 0.75rem !important;
+                margin-bottom: 0.25rem !important;
+            }
+            .form-group {
+                margin-bottom: 0.6rem !important;
+            }
+            .card-title, .login-title, .signup-title, .dashboard-title {
+                font-size: 1.1rem !important;
+            }
+            .card-subtitle, .login-subtitle, .signup-subtitle, .dashboard-subtitle {
+                font-size: 0.75rem !important;
+            }
+            .action-btn, .back-btn, .logout-btn, .nav-btn {
+                padding: 0.5rem 0.75rem !important;
+                font-size: 0.8rem !important;
+            }
+            .nav-btn-title {
+                font-size: 0.8rem !important;
+            }
+            .nav-btn-subtitle {
+                font-size: 0.7rem !important;
+            }
+            .divider {
+                margin: 0.75rem 0 !important;
+            }
+            .video-upload-wrapper, .video-upload-card {
+                padding: 0.75rem !important;
+            }
+            .upload-icon, .video-icon {
+                font-size: 1.5rem !important;
+            }
+            .upload-text, .video-upload-wrapper p {
+                font-size: 0.75rem !important;
+            }
+            .upload-label, .btn-video {
+                padding: 0.4rem 0.75rem !important;
+                font-size: 0.75rem !important;
+            }
+            
+            footer p {
+                font-size: 0.7rem !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .bg-pattern {
+                background-size: 120px auto;
+            }
+            .form-card, .login-container, .signup-container, .dashboard-card {
+                max-width: 300px;
+                width: 90%;
+            }
+        }
+            .login-container {
+                max-width: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="brand-logo">
+                    <img src="logo.png" alt="STPL Logo">
+                </div>
+                <div class="logo-text">
+                    <h1>STPL</h1>
+                    <p>Service Tyre Private Limited</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="login-section">
+            <div class="login-container">
+                <div class="login-header">
+                    <h2 class="login-title">Welcome Back</h2>
+                    <p class="login-subtitle" id="subtitle">Enter your credentials to continue</p>
+                </div>
+
+                <div class="info-message" id="infoMessage"></div>
+                <div class="success-message" id="successMessage"></div>
+                <div class="error-message" id="errorMessage"></div>
+
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Employee ID <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            id="empId"
+                            placeholder="Enter your employee ID"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            Role <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            id="role"
+                            placeholder="Your role"
+                            disabled
+                            readonly
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            Password <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="password" 
+                            class="form-input" 
+                            id="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+                        <span class="password-toggle" onclick="togglePassword('password')">👁️</span>
+                    </div>
+
+                    <div class="form-group" id="confirmPasswordGroup" style="display: none;">
+                        <label class="form-label">
+                            Confirm Password <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="password" 
+                            class="form-input" 
+                            id="confirmPassword"
+                            placeholder="Confirm your password"
+                        >
+                        <span class="password-toggle" onclick="togglePassword('confirmPassword')">👁️</span>
+                    </div>
+
+                    <button type="submit" class="login-btn" id="submitBtn">
+                        Sign In
+                    </button>
+                </form>
+
+                <div class="signup-link">
+                    Don't have an account? <a href="signup.html">Sign up here</a>
+                </div>
+            </div>
+        </section>
+
+        
+    </div>
+
+    <script>
+        let isFirstTimeLogin = false;
+        let userData = null;
+
+        // Initialize - Ensure Manager account exists
+        (function initializeManagerAccount() {
+            const managerExists = localStorage.getItem('user_4190123');
+            
+            if (!managerExists) {
+                // Create pre-approved Manager account
+                const managerData = {
+                    empId: '4190123',
+                    fullName: 'STPL',
+                    email: 'pakistanipride689@gmail.com',
+                    mobile: '03406786691',
+                    role: 'Manager',
+                    hostel: 'STPL',
+                    password: 'adminadmin',
+                    passwordSet: true,
+                    approvedAt: new Date().toLocaleString('en-PK', {
+                        year: 'numeric', month: 'short', day: 'numeric',
+                        hour: '2-digit', minute: '2-digit'
+                    })
+                };
+                localStorage.setItem('user_4190123', JSON.stringify(managerData));
+                console.log('Manager account created successfully');
+            }
+        })();
+
+        // Check URL parameters for employee ID from signup
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const empIdParam = urlParams.get('empId');
+            
+            if (empIdParam) {
+                document.getElementById('empId').value = empIdParam;
+                checkEmployeeId();
+            }
+        });
+
+        // Check employee ID and load role
+        document.getElementById('empId').addEventListener('blur', checkEmployeeId);
+        document.getElementById('empId').addEventListener('input', function() {
+            document.getElementById('role').value = '';
+            document.getElementById('infoMessage').style.display = 'none';
+        });
+
+        function checkEmployeeId() {
+            const empId = document.getElementById('empId').value.trim();
+            const roleInput = document.getElementById('role');
+            const infoMessage = document.getElementById('infoMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            const subtitle = document.getElementById('subtitle');
+            const submitBtn = document.getElementById('submitBtn');
+            const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+
+            if (!empId) {
+                roleInput.value = '';
+                return;
+            }
+
+            // Check if user exists
+            const userDataStr = localStorage.getItem('user_' + empId);
+            
+            if (!userDataStr) {
+                errorMessage.textContent = 'Employee ID not found! Please sign up first.';
+                errorMessage.classList.add('active');
+                roleInput.value = '';
+                setTimeout(() => {
+                    errorMessage.classList.remove('active');
+                }, 4000);
+                return;
+            }
+
+            userData = JSON.parse(userDataStr);
+            roleInput.value = userData.role;
+
+            // Check if password is already set
+            if (!userData.passwordSet) {
+                isFirstTimeLogin = true;
+                infoMessage.textContent = 'First time login: Please set your password below';
+                infoMessage.style.display = 'block';
+                subtitle.textContent = 'Set your password for first login';
+                submitBtn.textContent = 'Set Password & Login';
+                confirmPasswordGroup.style.display = 'block';
+                confirmPasswordInput.required = true;
+            } else {
+                isFirstTimeLogin = false;
+                infoMessage.style.display = 'none';
+                subtitle.textContent = 'Enter your credentials to continue';
+                submitBtn.textContent = 'Sign In';
+                confirmPasswordGroup.style.display = 'none';
+                confirmPasswordInput.required = false;
+                confirmPasswordInput.value = '';
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const empId = document.getElementById('empId').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+
+            errorMessage.classList.remove('active');
+            successMessage.classList.remove('active');
+
+            if (!userData) {
+                errorMessage.textContent = 'Please enter a valid Employee ID first.';
+                errorMessage.classList.add('active');
+                return;
+            }
+
+            if (password.length < 6) {
+                errorMessage.textContent = 'Password must be at least 6 characters long.';
+                errorMessage.classList.add('active');
+                setTimeout(() => errorMessage.classList.remove('active'), 3000);
+                return;
+            }
+
+            if (isFirstTimeLogin) {
+                if (password !== confirmPassword) {
+                    errorMessage.textContent = 'Passwords do not match! Please try again.';
+                    errorMessage.classList.add('active');
+                    setTimeout(() => errorMessage.classList.remove('active'), 3000);
+                    return;
+                }
+
+                userData.password = password;
+                userData.passwordSet = true;
+                localStorage.setItem('user_' + empId, JSON.stringify(userData));
+
+                successMessage.textContent = 'Password set successfully! Logging you in...';
+                successMessage.classList.add('active');
+
+                setTimeout(() => {
+                    sessionStorage.setItem('currentUser', JSON.stringify(userData));
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+
+            } else {
+                if (userData.password !== password) {
+                    errorMessage.textContent = 'Incorrect password! Please try again.';
+                    errorMessage.classList.add('active');
+                    setTimeout(() => errorMessage.classList.remove('active'), 3000);
+                    return;
+                }
+
+                successMessage.textContent = 'Login successful! Welcome back, ' + userData.fullName + '!';
+                successMessage.classList.add('active');
+
+                setTimeout(() => {
+                    sessionStorage.setItem('currentUser', JSON.stringify(userData));
+                    window.location.href = 'dashboard.html';
+                }, 1000);
+            }
+        }
+
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            field.type = field.type === 'password' ? 'text' : 'password';
+        }
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(() => { console.log('ServiceWorker registration successful'); })
+                    .catch((err) => { console.log('ServiceWorker registration failed: ', err); });
+            });
+        }
+    </script>
+</body>
+</html>

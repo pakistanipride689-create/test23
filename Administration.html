@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1A1A1A">
+    <meta name="description" content="STPL - Service Tyre Private Limited Complaint Management System">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="STPL CMS">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <title>Administration - STPL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #FFFFFF;
+            --secondary-bg: #F5F5F5;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --accent-color: #1A1A1A;
+            --accent-hover: #333333;
+            --text-primary: #1A1A1A;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --success: #10B981;
+            --warning: #F59E0B;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: url('Gemini_Generated_Image_5sr3gj5sr3gj5sr3.png') repeat-y left center;
+            background-size: 150px auto;
+            background-color: #FFFFFF;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 2rem;
+            background: transparent;
+            
+            border-bottom: 1px solid var(--border-color);
+            animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-logo { width: 65px;
+            height: 65px; }
+        
+        .brand-logo img {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+        }
+
+        .logo-text { text-align: center; }
+
+        .logo-text h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--text-primary);
+        }
+
+        .logo-text p {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Back Bar */
+        .back-bar {
+            background: rgba(245, 245, 245, 0.8);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 2rem;
+            backdrop-filter: blur(20px);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .back-btn:hover {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+            background: rgba(26, 26, 26, 0.05);
+        }
+
+        /* Dashboard Section */
+        .dashboard-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .dashboard-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 1.5rem;
+            max-width: 340px;
+            width: 92%;
+            margin: 0 auto;
+            width: 100%;
+            box-shadow: 0 25px 80px var(--shadow);
+            animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .dashboard-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .dashboard-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+            margin: 1.5rem 0;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 0.75rem;
+            background: rgba(245, 245, 245, 0.8);
+            border: 1.5px solid var(--border-color);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(26, 26, 26, 0.05), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--accent-color);
+            background: rgba(26, 26, 26, 0.05);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .nav-btn-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+        }
+
+        .nav-btn-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+        }
+
+        /* Approval Button Special */
+        .approval-btn {
+            border-color: rgba(245, 158, 11, 0.3) !important;
+            background: rgba(245, 158, 11, 0.05) !important;
+        }
+
+        .approval-btn:hover {
+            border-color: var(--warning) !important;
+            background: rgba(245, 158, 11, 0.1) !important;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.15) !important;
+        }
+
+        .approval-btn .nav-btn-title {
+            color: #D97706;
+        }
+
+        .pending-badge {
+            position: absolute;
+            top: 10px; right: 12px;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 50%;
+            width: 22px; height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #FCD34D;
+            animation: badgePulse 2s ease-in-out infinite;
+            display: none;
+        }
+
+        .pending-badge.visible {
+            display: flex;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 6px rgba(26, 26, 26, 0.3); }
+            50% { transform: scale(1.15); box-shadow: 0 0 14px rgba(26, 26, 26, 0.5); }
+        }
+
+        .hidden { display: none !important; }
+
+        /* Footer */
+        footer {
+            background: transparent;
+            
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 480px) {
+            header { padding: 0.75rem; }
+            .brand-logo { width: 65px;
+            height: 65px; }
+            .logo-text h1 { font-size: 1.3rem; letter-spacing: 2px; }
+            .logo-text p { font-size: 0.6rem; letter-spacing: 1px; }
+            .bg-pattern {
+                background-size: 80px auto;
+            }
+            .form-card, .login-container, .signup-container, .dashboard-card {
+                max-width: 260px !important;
+                width: 88% !important;
+                padding: 1rem !important;
+                border-radius: 14px !important;
+            }
+            .form-input, .form-select, .login-btn, .signup-btn, .submit-btn, .btn-submit {
+                padding: 0.6rem 0.75rem !important;
+                font-size: 0.85rem !important;
+            }
+            .form-label {
+                font-size: 0.75rem !important;
+                margin-bottom: 0.25rem !important;
+            }
+            .form-group {
+                margin-bottom: 0.6rem !important;
+            }
+            .card-title, .login-title, .signup-title, .dashboard-title {
+                font-size: 1.1rem !important;
+            }
+            .card-subtitle, .login-subtitle, .signup-subtitle, .dashboard-subtitle {
+                font-size: 0.75rem !important;
+            }
+            .action-btn, .back-btn, .logout-btn, .nav-btn {
+                padding: 0.5rem 0.75rem !important;
+                font-size: 0.8rem !important;
+            }
+            .nav-btn-title {
+                font-size: 0.8rem !important;
+            }
+            .nav-btn-subtitle {
+                font-size: 0.7rem !important;
+            }
+            .divider {
+                margin: 0.75rem 0 !important;
+            }
+            .video-upload-wrapper, .video-upload-card {
+                padding: 0.75rem !important;
+            }
+            .upload-icon, .video-icon {
+                font-size: 1.5rem !important;
+            }
+            .upload-text, .video-upload-wrapper p {
+                font-size: 0.75rem !important;
+            }
+            .upload-label, .btn-video {
+                padding: 0.4rem 0.75rem !important;
+                font-size: 0.75rem !important;
+            }
+            footer {
+                padding: 0.75rem !important;
+            }
+            footer p {
+                font-size: 0.7rem !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .bg-pattern {
+                background-size: 120px auto;
+            }
+            .form-card, .login-container, .signup-container, .dashboard-card {
+                max-width: 300px;
+                width: 90%;
+            }
+        }
+        }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-container">
+                <div class="brand-logo">
+                    <img src="logo.png" alt="STPL Logo">
+                </div>
+                <div class="logo-text">
+                    <h1>STPL</h1>
+                    <p>Service Tyre Private Limited</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Back Bar -->
+        <div class="back-bar">
+            <a href="dashboard.html" class="back-btn">
+                ← Back to Dashboard
+            </a>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div class="dashboard-section">
+            <div class="dashboard-card">
+                <div class="dashboard-header">
+                    <h2 class="dashboard-title">Administration</h2>
+                    <p class="dashboard-subtitle">Select a module to continue</p>
+                </div>
+                
+                <div class="divider"></div>
+
+                <div class="nav-buttons">
+                    <a href="hostel.html" class="nav-btn" id="hostelBtn">
+                        <div class="nav-btn-title">Hostel Accommodation</div>
+                        <div class="nav-btn-subtitle">Employee Registration Form</div>
+                    </a>
+
+                    <a href="inventory.html" class="nav-btn" id="inventoryBtn">
+                        <div class="nav-btn-title">Inventory Management</div>
+                        <div class="nav-btn-subtitle">Manage Inventory Records</div>
+                    </a>
+
+                    <a href="Submitted-complaints.html" class="nav-btn">
+                        <div class="nav-btn-title">Submitted Complaints</div>
+                        <div class="nav-btn-subtitle">View Submitted Complaints</div>
+                    </a>
+
+                    <a href="new-complaint.html" class="nav-btn" id="newComplaintBtn">
+                        <div class="nav-btn-title">New Complaint</div>
+                        <div class="nav-btn-subtitle">Submit a New Complaint</div>
+                    </a>
+
+                    <a href="signup-approvals.html" class="nav-btn approval-btn" id="approvalBtn">
+                        <div class="nav-btn-title">Signup Approvals</div>
+                        <div class="nav-btn-subtitle">Manage Pending Registrations</div>
+                        <span class="pending-badge" id="pendingBadge">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 STPL - Service Tyre Private Limited</p>
+        </footer>
+    </div>
+
+    <script>
+        (function(){
+            let currentUser = null;
+
+            function checkAuth() {
+                const userData = sessionStorage.getItem('currentUser');
+                if (!userData) {
+                    window.location.href = 'index.html';
+                    return false;
+                }
+                currentUser = JSON.parse(userData);
+                applyRoleBasedAccess();
+                return true;
+            }
+
+            function applyRoleBasedAccess() {
+                if (!currentUser) return;
+
+                const role = currentUser.role;
+                const hostelBtn = document.getElementById('hostelBtn');
+                const inventoryBtn = document.getElementById('inventoryBtn');
+                const newComplaintBtn = document.getElementById('newComplaintBtn');
+                const approvalBtn = document.getElementById('approvalBtn');
+
+                if (role === 'Manager') {
+                    hostelBtn.classList.remove('hidden');
+                    inventoryBtn.classList.remove('hidden');
+                    newComplaintBtn.classList.remove('hidden');
+                    approvalBtn.classList.remove('hidden');
+                } else if (role === 'Admin') {
+                    hostelBtn.classList.remove('hidden');
+                    inventoryBtn.classList.remove('hidden');
+                    newComplaintBtn.classList.add('hidden');
+                    approvalBtn.classList.add('hidden');
+                } else if (role === 'Employee') {
+                    hostelBtn.classList.add('hidden');
+                    inventoryBtn.classList.add('hidden');
+                    newComplaintBtn.classList.add('hidden');
+                    approvalBtn.classList.add('hidden');
+                }
+            }
+
+            function updatePendingBadge() {
+                let pendingCount = 0;
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key && key.startsWith('signup_request_')) {
+                        try {
+                            const request = JSON.parse(localStorage.getItem(key));
+                            if (request && request.status === 'pending') {
+                                pendingCount++;
+                            }
+                        } catch(e) {}
+                    }
+                }
+                const badge = document.getElementById('pendingBadge');
+                if (badge) {
+                    badge.textContent = pendingCount;
+                    if (pendingCount > 0) {
+                        badge.classList.add('visible');
+                    } else {
+                        badge.classList.remove('visible');
+                    }
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                checkAuth();
+                updatePendingBadge();
+            });
+        })();
+    </script>
+</body>
+</html>

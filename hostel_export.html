@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1A1A1A">
+    <meta name="description" content="STPL - Service Tyre Private Limited Complaint Management System">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="STPL CMS">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <title>Hostel Export - STPL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #FFFFFF;
+            --secondary-bg: #F5F5F5;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --accent-color: #1A1A1A;
+            --accent-hover: #333333;
+            --text-primary: #1A1A1A;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --success: #10B981;
+            --warning: #F59E0B;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: url('Gemini_Generated_Image_5sr3gj5sr3gj5sr3.png') repeat-y left center;
+            background-size: 150px auto;
+            background-color: #FFFFFF;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 1.5rem 2rem;
+            background: transparent;
+            
+            border-bottom: 1px solid var(--border-color);
+            animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-logo { width: 65px;
+            height: 65px; }
+        
+        .brand-logo img {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+        }
+
+        .logo-text { text-align: center; }
+
+        .logo-text h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--text-primary);
+        }
+
+        .logo-text p {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .sub-header {
+            background: rgba(245, 245, 245, 0.8);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .back-btn:hover {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+            background: rgba(26, 26, 26, 0.05);
+        }
+
+        .page-title-wrap { display: flex; flex-direction: column; }
+
+        .page-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+        }
+
+        .page-subtitle {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 1.5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .export-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 25px 80px var(--shadow);
+        }
+
+        .export-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .export-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+        }
+
+        .export-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .export-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid;
+        }
+
+        .export-btn.csv {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: var(--success);
+        }
+
+        .export-btn.csv:hover {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success);
+        }
+
+        .export-btn.pdf {
+            background: rgba(220, 38, 38, 0.1);
+            border-color: rgba(220, 38, 38, 0.3);
+            color: #DC2626;
+        }
+
+        .export-btn.pdf:hover {
+            background: rgba(220, 38, 38, 0.2);
+            border-color: #DC2626;
+        }
+
+        .export-btn svg { width: 14px; height: 14px; }
+
+        .table-container {
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+
+        thead {
+            background: rgba(245, 245, 245, 0.8);
+        }
+
+        th {
+            padding: 0.75rem 0.5rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 0.6rem 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        tbody tr:hover {
+            background: rgba(26, 26, 26, 0.02);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-left {
+            background: rgba(220, 38, 38, 0.1);
+            color: #DC2626;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state .empty-icon { font-size: 3rem; margin-bottom: 0.75rem; }
+        .empty-state h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1.5px solid var(--success);
+            border-radius: 10px;
+            padding: 0.85rem 1.25rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--success);
+            z-index: 9999;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px var(--shadow);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        footer {
+            background: transparent;
+            
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 1rem; }
+            .brand-logo { width: 75px;
+            height: 75px; }
+            .logo-text h1 { font-size: 1.5rem; }
+            .sub-header { padding: 0.75rem 1rem; }
+            .main-content { padding: 1rem; }
+            .export-header { flex-direction: column; align-items: flex-start; }
+            .export-actions { width: 100%; }
+            .export-btn { flex: 1; justify-content: center; }
+            table { font-size: 0.7rem; }
+            th, td { padding: 0.5rem 0.3rem; }
+            .bg-pattern {
+                background-size: 120px auto;
+                background-position: left top;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="brand-logo">
+                    <img src="logo.png" alt="STPL Logo">
+                </div>
+                <div class="logo-text">
+                    <h1>STPL</h1>
+                    <p>Service Tyre Private Limited</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="sub-header">
+            <a href="hostel.html" class="back-btn">← Back</a>
+            <div class="page-title-wrap">
+                <div class="page-title">Hostel Records</div>
+                <div class="page-subtitle">Export Accommodation Data</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="export-card">
+                <div class="export-header">
+                    <div class="export-title">Employee Accommodation Records</div>
+                    <div class="export-actions">
+                        <button class="export-btn csv" onclick="exportCSV()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            CSV
+                        </button>
+                        <button class="export-btn pdf" onclick="exportPDF()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            PDF
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="recordsTable">
+                        <thead>
+                            <tr>
+                                <th>Hostel</th>
+                                <th>Emp ID</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Mobile</th>
+                                <th>Join Date</th>
+                                <th>Leave Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="empty-state" id="emptyState" style="display:none;">
+                    <div class="empty-icon">🏠</div>
+                    <h3>No Records Found</h3>
+                    <p>No hostel accommodation records available.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="toast" id="toast"></div>
+
+        <footer>
+            <p>&copy; 2026 STPL - Service Tyre Private Limited</p>
+        </footer>
+    </div>
+
+    <script>
+        let allRecords = [];
+
+        function loadRecords() {
+            allRecords = JSON.parse(localStorage.getItem('hostelRecords') || '[]');
+            allRecords.sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+            renderTable();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            const emptyState = document.getElementById('emptyState');
+            const table = document.getElementById('recordsTable');
+
+            if (allRecords.length === 0) {
+                table.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            table.style.display = 'table';
+            emptyState.style.display = 'none';
+
+            tbody.innerHTML = allRecords.map(r => {
+                const status = r.leaveDate ? 'left' : 'active';
+                const statusClass = status === 'active' ? 'status-active' : 'status-left';
+                const statusText = status === 'active' ? 'Active' : 'Left';
+                
+                return `
+                <tr>
+                    <td>${escHtml(r.hostelName)}</td>
+                    <td>${escHtml(r.empId)}</td>
+                    <td>${escHtml(r.empName)}</td>
+                    <td>${escHtml(r.department)}</td>
+                    <td>${escHtml(r.mobile)}</td>
+                    <td>${formatDate(r.joinDate)}</td>
+                    <td>${r.leaveDate ? formatDate(r.leaveDate) : '-'}</td>
+                    <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                </tr>`;
+            }).join('');
+        }
+
+        function exportCSV() {
+            if (allRecords.length === 0) {
+                showToast('No records to export');
+                return;
+            }
+
+            let csv = 'Hostel,Emp ID,Emp Name,Department,Emergency Contact,Relation,Mobile,Address,Join Date,Leave Date,Status\n';
+            
+            allRecords.forEach(r => {
+                const status = r.leaveDate ? 'Left' : 'Active';
+                csv += `"${r.hostelName}","${r.empId}","${r.empName}","${r.department}","${r.emergencyName}","${r.emergencyRelation}","${r.mobile}","${r.address}","${r.joinDate}","${r.leaveDate || ''}","${status}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `hostel_records_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+            
+            showToast('CSV exported successfully');
+        }
+
+        function exportPDF() {
+            if (allRecords.length === 0) {
+                showToast('No records to export');
+                return;
+            }
+
+            const printWindow = window.open('', '_blank');
+            
+            let html = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Hostel Records - STPL</title>
+                <style>
+                    body { font-family: Arial, sans-serif; padding: 20px; }
+                    h1 { text-align: center; color: #1A1A1A; }
+                    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; font-size: 12px; }
+                    th { background: #f5f5f5; font-weight: bold; }
+                    .status-active { color: #10B981; font-weight: bold; }
+                    .status-left { color: #DC2626; font-weight: bold; }
+                </style>
+            </head>
+            <body>
+                <h1>STPL - Hostel Accommodation Records</h1>
+                <p>Generated: ${new Date().toLocaleString('en-PK')}</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hostel</th>
+                            <th>Emp ID</th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Mobile</th>
+                            <th>Join Date</th>
+                            <th>Leave Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            allRecords.forEach(r => {
+                const status = r.leaveDate ? 'Left' : 'Active';
+                const statusClass = r.leaveDate ? 'status-left' : 'status-active';
+                html += `
+                <tr>
+                    <td>${escHtml(r.hostelName)}</td>
+                    <td>${escHtml(r.empId)}</td>
+                    <td>${escHtml(r.empName)}</td>
+                    <td>${escHtml(r.department)}</td>
+                    <td>${escHtml(r.mobile)}</td>
+                    <td>${formatDate(r.joinDate)}</td>
+                    <td>${r.leaveDate ? formatDate(r.leaveDate) : '-'}</td>
+                    <td class="${statusClass}">${status}</td>
+                </tr>`;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+            </body>
+            </html>`;
+
+            printWindow.document.write(html);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '-';
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-PK', { day: '2-digit', month: 'short', year: 'numeric' });
+        }
+
+        function escHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        }
+
+        document.addEventListener('DOMContentLoaded', loadRecords);
+    </script>
+</body>
+</html>

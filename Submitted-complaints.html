@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1A1A1A">
+    <meta name="description" content="STPL - Service Tyre Private Limited Complaint Management System">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="STPL CMS">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <title>Submitted Complaints - STPL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #FFFFFF;
+            --secondary-bg: #F5F5F5;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --accent-color: #1A1A1A;
+            --accent-hover: #333333;
+            --text-primary: #1A1A1A;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --success: #10B981;
+            --warning: #F59E0B;
+            --pending-color: #F59E0B;
+            --resolved-color: #10B981;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: url('Gemini_Generated_Image_5sr3gj5sr3gj5sr3.png') repeat-y left center;
+            background-size: 150px auto;
+            background-color: #FFFFFF;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 1.5rem 2rem;
+            background: transparent;
+            
+            border-bottom: 1px solid var(--border-color);
+            animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-logo { width: 65px;
+            height: 65px; }
+        
+        .brand-logo img {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+        }
+
+        .logo-text { text-align: center; }
+
+        .logo-text h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--text-primary);
+        }
+
+        .logo-text p {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .sub-header {
+            background: rgba(245, 245, 245, 0.8);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .back-btn:hover {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+            background: rgba(26, 26, 26, 0.05);
+        }
+
+        .page-title-wrap { display: flex; flex-direction: column; }
+
+        .page-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+        }
+
+        .page-subtitle {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: rgba(245, 245, 245, 0.6);
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.6rem 1rem;
+            min-width: 90px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .stat-card:hover { transform: translateY(-2px); }
+
+        .stat-card.stat-pending { border-color: rgba(245, 158, 11, 0.4); }
+        .stat-card.stat-resolved { border-color: rgba(16, 185, 129, 0.4); }
+
+        .stat-number {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 0.15rem;
+        }
+
+        .stat-pending .stat-number { color: var(--pending-color); }
+        .stat-resolved .stat-number { color: var(--resolved-color); }
+        .stat-total .stat-number { color: var(--text-primary); }
+
+        .stat-label {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            background: rgba(245, 245, 245, 0.4);
+        }
+
+        .filter-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-right: 0.25rem;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.85rem;
+            border-radius: 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            transition: all 0.25s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: rgba(0, 0, 0, 0.2);
+            color: var(--text-primary);
+        }
+
+        .filter-btn.active-all {
+            background: rgba(26, 26, 26, 0.1);
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .filter-btn.active-pending {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: var(--pending-color);
+            color: var(--pending-color);
+        }
+
+        .filter-btn.active-resolved {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--resolved-color);
+            color: var(--resolved-color);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 1.25rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state .empty-icon { font-size: 3rem; margin-bottom: 0.75rem; }
+        .empty-state h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .complaints-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1rem;
+        }
+
+        .complaint-card {
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+        }
+
+        .complaint-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 100%;
+        }
+
+        .complaint-card.card-pending::before { background: var(--pending-color); }
+        .complaint-card.card-resolved::before { background: var(--resolved-color); }
+
+        .complaint-card.card-pending { border-color: rgba(245, 158, 11, 0.25); }
+        .complaint-card.card-resolved { border-color: rgba(16, 185, 129, 0.25); }
+
+        .complaint-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px var(--shadow);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .complaint-type {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--text-primary);
+        }
+
+        .complaint-id {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border: 1px solid;
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--pending-color);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .status-resolved {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--resolved-color);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .card-info {
+            margin-bottom: 0.75rem;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 0.3rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .info-row .info-value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .description-box {
+            background: rgba(245, 245, 245, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .description-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+        }
+
+        .description-text {
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+            max-height: 80px;
+            overflow-y: auto;
+        }
+
+        .date-time {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .video-section {
+            margin-bottom: 0.75rem;
+        }
+
+        .video-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+        }
+
+        .video-preview {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-resolve {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: #fff;
+        }
+
+        .btn-resolve:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-resolved {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            cursor: default;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1.5px solid;
+            border-radius: 10px;
+            padding: 0.85rem 1.25rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 9999;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            backdrop-filter: blur(20px);
+            max-width: 300px;
+            box-shadow: 0 10px 40px var(--shadow);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.toast-success { border-color: var(--success); color: var(--success); }
+
+        /* Footer */
+        footer {
+            background: transparent;
+            
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 600px) {
+            header { padding: 1rem; }
+            .brand-logo { width: 75px;
+            height: 75px; }
+            .logo-text h1 { font-size: 1.5rem; }
+            .sub-header { padding: 0.75rem 1rem; }
+            .page-title { font-size: 0.85rem; }
+            .main-content { padding: 1rem; }
+            .stats-bar { padding: 0.75rem 1rem; }
+            .filter-bar { padding: 0.6rem 1rem; }
+            .complaints-grid { grid-template-columns: 1fr; }
+            .bg-pattern {
+                background-size: 120px auto;
+                background-position: left top;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .bg-pattern {
+                background-size: 120px auto;
+            }
+            .form-card, .login-container, .signup-container, .dashboard-card {
+                max-width: 300px;
+                width: 90%;
+            }
+        }
+        }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="brand-logo">
+                    <img src="logo.png" alt="STPL Logo">
+                </div>
+                <div class="logo-text">
+                    <h1>STPL</h1>
+                    <p>Service Tyre Private Limited</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="sub-header">
+            <a href="Administration.html" class="back-btn">← Back</a>
+            <div class="page-title-wrap">
+                <div class="page-title">Submitted Complaints</div>
+                <div class="page-subtitle">View and Manage Complaints</div>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-card stat-total">
+                <div class="stat-number" id="statTotal">0</div>
+                <div class="stat-label">Total</div>
+            </div>
+            <div class="stat-card stat-pending">
+                <div class="stat-number" id="statPending">0</div>
+                <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat-card stat-resolved">
+                <div class="stat-number" id="statResolved">0</div>
+                <div class="stat-label">Resolved</div>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <span class="filter-label">Filter:</span>
+            <button class="filter-btn active-all" onclick="applyFilter('all', this)">All</button>
+            <button class="filter-btn" onclick="applyFilter('pending', this)">Pending</button>
+            <button class="filter-btn" onclick="applyFilter('resolved', this)">Resolved</button>
+        </div>
+
+        <div class="main-content">
+            <div class="complaints-grid" id="complaintsGrid"></div>
+            <div class="empty-state" id="emptyState" style="display:none;">
+                <div class="empty-icon">📋</div>
+                <h3>No Complaints Found</h3>
+                <p>No complaints match the selected filter.</p>
+            </div>
+        </div>
+
+        <div class="toast" id="toast"></div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 STPL - Service Tyre Private Limited</p>
+        </footer>
+    </div>
+
+    <script>
+        let allComplaints = [];
+        let currentFilter = 'all';
+        let currentUser = null;
+
+        function checkAuth() {
+            const userData = sessionStorage.getItem('currentUser');
+            if (!userData) {
+                window.location.href = 'index.html';
+                return false;
+            }
+            currentUser = JSON.parse(userData);
+            return true;
+        }
+
+        function loadComplaints() {
+            allComplaints = JSON.parse(localStorage.getItem('complaints') || '[]');
+            allComplaints.sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+            updateStats();
+            renderCards();
+        }
+
+        function updateStats() {
+            const total = allComplaints.length;
+            const pending = allComplaints.filter(c => c.status === 'Pending').length;
+            const resolved = allComplaints.filter(c => c.status === 'Resolved').length;
+
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statPending').textContent = pending;
+            document.getElementById('statResolved').textContent = resolved;
+        }
+
+        function applyFilter(filter, btn) {
+            currentFilter = filter;
+
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('active-all', 'active-pending', 'active-resolved');
+            });
+            if (filter === 'all') btn.classList.add('active-all');
+            else if (filter === 'pending') btn.classList.add('active-pending');
+            else if (filter === 'resolved') btn.classList.add('active-resolved');
+
+            renderCards();
+        }
+
+        function renderCards() {
+            const grid = document.getElementById('complaintsGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            const filtered = currentFilter === 'all'
+                ? allComplaints
+                : allComplaints.filter(c => c.status.toLowerCase() === currentFilter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            grid.innerHTML = filtered.map((c) => buildCard(c)).join('');
+        }
+
+        function buildCard(c) {
+            const statusClass = c.status === 'Pending' ? 'card-pending' : 'card-resolved';
+            const statusBadgeClass = c.status === 'Pending' ? 'status-pending' : 'status-resolved';
+            const statusEmoji = c.status === 'Pending' ? '⏳' : '✅';
+
+            const isManager = currentUser && (currentUser.role === 'Manager' || currentUser.role === 'Admin');
+            const showResolveBtn = isManager && c.status === 'Pending';
+
+            return `
+            <div class="complaint-card ${statusClass}" id="card-${c.id}">
+                <div class="card-header">
+                    <div>
+                        <div class="complaint-type">${escHtml(c.complaintType)}</div>
+                        <div class="complaint-id">ID: ${escHtml(c.id)}</div>
+                    </div>
+                    <div class="status-badge ${statusBadgeClass}">${statusEmoji} ${escHtml(c.status)}</div>
+                </div>
+
+                <div class="card-info">
+                    <div class="info-row">
+                        <span>👤</span>
+                        <span class="info-value">${escHtml(c.empName)} (${escHtml(c.empId)})</span>
+                    </div>
+                    <div class="info-row">
+                        <span>🏢</span>
+                        <span class="info-value">${escHtml(c.department)}</span>
+                    </div>
+                </div>
+
+                <div class="description-box">
+                    <div class="description-label">Description</div>
+                    <div class="description-text">${escHtml(c.complaintDescription)}</div>
+                </div>
+
+                <div class="date-time">Submitted: ${formatDate(c.submittedAt)}</div>
+
+                ${c.videoData ? `
+                <div class="video-section">
+                    <div class="video-label">Video Evidence</div>
+                    <video class="video-preview" controls playsinline>
+                        <source src="${c.videoData}" type="video/webm">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                ` : ''}
+
+                ${showResolveBtn ? `
+                <button class="action-btn btn-resolve" onclick="resolveComplaint('${c.id}')">
+                    Mark as Resolved
+                </button>
+                ` : (c.status === 'Resolved' ? `
+                <button class="action-btn btn-resolved" disabled>
+                    ✓ Resolved
+                </button>
+                ` : '')}
+            </div>`;
+        }
+
+        function resolveComplaint(id) {
+            const complaints = JSON.parse(localStorage.getItem('complaints') || '[]');
+            const complaint = complaints.find(c => c.id === id);
+            
+            if (complaint) {
+                complaint.status = 'Resolved';
+                complaint.resolvedAt = new Date().toISOString();
+                complaint.resolvedBy = currentUser.empId;
+                
+                localStorage.setItem('complaints', JSON.stringify(complaints));
+                showToast('Complaint marked as resolved');
+                loadComplaints();
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast toast-success';
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
+
+        function formatDate(isoString) {
+            if (!isoString) return 'N/A';
+            const date = new Date(isoString);
+            return date.toLocaleString('en-PK', {
+                year: 'numeric', month: 'short', day: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+        }
+
+        function escHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (checkAuth()) {
+                loadComplaints();
+            }
+        });
+    </script>
+</body>
+</html>

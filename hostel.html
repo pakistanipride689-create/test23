@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1A1A1A">
+    <meta name="description" content="STPL - Service Tyre Private Limited Complaint Management System">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="STPL CMS">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <title>Hostel Management - STPL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #FFFFFF;
+            --secondary-bg: #F5F5F5;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --accent-color: #1A1A1A;
+            --accent-hover: #333333;
+            --text-primary: #1A1A1A;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #DC2626;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: url('Gemini_Generated_Image_5sr3gj5sr3gj5sr3.png') repeat-y left center;
+            background-size: 150px auto;
+            background-color: #FFFFFF;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 1rem 1.5rem;
+            background: transparent;
+            
+            border-bottom: 1px solid var(--border-color);
+            animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .header-inner {
+            max-width: 720px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-logo img {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+        }
+
+        .logo-text h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .logo-text p {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .button-container {
+            max-width: 720px;
+            margin: 0.5rem auto 0;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--border-color);
+            font-family: 'Inter', sans-serif;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .action-btn:hover { 
+            color: var(--accent-color); 
+            border-color: var(--accent-color);
+            background: rgba(26, 26, 26, 0.05);
+        }
+
+        .action-btn svg { width: 16px; height: 16px; }
+
+        .form-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 1rem 1rem 2rem;
+        }
+
+        .form-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 1.5rem;
+            max-width: 320px;
+            width: 92%;
+            margin: 0 auto;
+            width: 92%;
+            margin: 0 auto;
+            width: 100%;
+            box-shadow: 0 25px 80px var(--shadow);
+            animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .card-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+            margin: 1rem 0;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.5px;
+        }
+
+        .required { color: var(--error); }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 0.7rem 0.85rem;
+            background: rgba(245, 245, 245, 0.8);
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+            background: #FFFFFF;
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder { color: var(--text-muted); }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 60px;
+            line-height: 1.5;
+        }
+
+        .form-select {
+            appearance: none;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23666666' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 2rem;
+        }
+
+        .form-select option {
+            background: var(--secondary-bg);
+            color: var(--text-primary);
+        }
+
+        .video-upload-wrapper {
+            border: 1.5px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: rgba(245, 245, 245, 0.5);
+        }
+
+        .video-upload-wrapper:hover {
+            border-color: var(--accent-color);
+            background: rgba(26, 26, 26, 0.03);
+        }
+
+        .video-upload-wrapper.has-image {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .video-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .video-upload-wrapper p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-upload-wrapper .file-name {
+            color: var(--success);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.3rem;
+        }
+
+        .video-btns {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-video {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.5rem 0.85rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .btn-video:hover {
+            background: rgba(26, 26, 26, 0.05);
+            border-color: var(--accent-color);
+        }
+
+        .btn-video svg { width: 14px; height: 14px; }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-box {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.25rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-box h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .modal-box .close-modal {
+            float: right;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover { color: var(--accent-color); }
+
+        #cameraPreview {
+            width: 100%;
+            border-radius: 10px;
+            background: #000;
+            max-height: 280px;
+            object-fit: cover;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-modal {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-modal.primary {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            color: #fff;
+        }
+
+        .btn-modal.primary:hover {
+            box-shadow: 0 4px 15px rgba(26, 26, 26, 0.3);
+        }
+
+        .btn-modal.secondary {
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-modal.secondary:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 0.65rem;
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(26, 26, 26, 0.2);
+            margin-top: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(26, 26, 26, 0.3);
+        }
+
+        .msg {
+            padding: 0.65rem 0.85rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            display: none;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .msg.active { display: block; }
+
+        .msg.error {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            color: var(--error);
+        }
+
+        .msg.success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--success);
+        }
+
+        .image-preview {
+            width: 100%;
+            max-width: 150px;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            border: 1.5px solid var(--border-color);
+        }
+
+        .access-denied {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .access-denied h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            color: var(--error);
+            margin-bottom: 1rem;
+        }
+
+        .access-denied p {
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .hidden { display: none !important; }
+
+        footer {
+            background: transparent;
+            
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 480px) {
+            header { padding: 0.75rem; }
+            .brand-logo { width: 65px;
+            height: 65px; }
+            .logo-text h1 { font-size: 1.3rem; letter-spacing: 2px; }
+            .logo-text p { font-size: 0.6rem; letter-spacing: 1px; }
+            .bg-pattern {
+                background-size: 80px auto;
+            }
+            .form-card, .login-container, .signup-container, .dashboard-card {
+                max-width: 260px !important;
+                width: 88% !important;
+                padding: 1rem !important;
+                border-radius: 14px !important;
+            }
+            .form-input, .form-select, .login-btn, .signup-btn, .submit-btn, .btn-submit {
+                padding: 0.6rem 0.75rem !important;
+                font-size: 0.85rem !important;
+            }
+            .form-label {
+                font-size: 0.75rem !important;
+                margin-bottom: 0.25rem !important;
+            }
+            .form-group {
+                margin-bottom: 0.6rem !important;
+            }
+            .card-title, .login-title, .signup-title, .dashboard-title {
+                font-size: 1.1rem !important;
+            }
+            .card-subtitle, .login-subtitle, .signup-subtitle, .dashboard-subtitle {
+                font-size: 0.75rem !important;
+            }
+            .action-btn, .back-btn, .logout-btn, .nav-btn {
+                padding: 0.5rem 0.75rem !important;
+                font-size: 0.8rem !important;
+            }
+            .nav-btn-title {
+                font-size: 0.8rem !important;
+            }
+            .nav-btn-subtitle {
+                font-size: 0.7rem !important;
+            }
+            .divider {
+                margin: 0.75rem 0 !important;
+            }
+            .video-upload-wrapper, .video-upload-card {
+                padding: 0.75rem !important;
+            }
+            .upload-icon, .video-icon {
+                font-size: 1.5rem !important;
+            }
+            .upload-text, .video-upload-wrapper p {
+                font-size: 0.75rem !important;
+            }
+            .upload-label, .btn-video {
+                padding: 0.4rem 0.75rem !important;
+                font-size: 0.75rem !important;
+            }
+            footer {
+                padding: 0.75rem !important;
+            }
+            footer p {
+                font-size: 0.7rem !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .bg-pattern {
+                background-size: 120px auto;
+            }
+            .form-card, .login-container, .signup-container, .dashboard-card {
+                max-width: 300px;
+                width: 90%;
+            }
+        }
+        }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <div class="container">
+        <header>
+            <div class="header-inner">
+                <div class="brand-logo">
+                    <img src="logo.png" alt="STPL Logo">
+                </div>
+                <div class="logo-text">
+                    <h1>STPL</h1>
+                    <p>Service Tyre Private Limited</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="button-container" id="buttonContainer">
+            <button class="action-btn" onclick="window.location.href='Administration.html'">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+                Back
+            </button>
+            <button class="action-btn" onclick="window.location.href='hostel_export.html'">
+                Export
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </button>
+        </div>
+
+        <section class="form-section" id="formSection">
+            <div class="form-card">
+                <div class="card-header">
+                    <h2 class="card-title">Hostel Accommodation</h2>
+                    <p class="card-subtitle">Employee Registration Form</p>
+                </div>
+
+                <div class="msg success" id="successMsg"></div>
+                <div class="msg error" id="infoMsg"></div>
+
+                <form id="hostelForm">
+                    <div class="form-group">
+                        <label class="form-label">Hostel Name <span class="required">*</span></label>
+                        <select class="form-select" id="hostelName" required>
+                            <option value="">Select Hostel</option>
+                            <option value="Vigo">Vigo</option>
+                            <option value="STPL">STPL</option>
+                            <option value="Champion">Champion</option>
+                            <option value="Saddiq">Saddiq</option>
+                            <option value="Colony">Colony</option>
+                            <option value="Murree">Murree</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Emp ID <span class="required">*</span></label>
+                        <input type="text" class="form-input" id="empId" placeholder="Enter Employee ID" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Emp Name <span class="required">*</span></label>
+                        <input type="text" class="form-input" id="empName" placeholder="Enter Employee Name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Department <span class="required">*</span></label>
+                        <input type="text" class="form-input" id="department" placeholder="Enter Department" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Emergency Contact Name <span class="required">*</span></label>
+                        <input type="text" class="form-input" id="emergencyName" placeholder="Enter Emergency Contact Name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Relation With Employee <span class="required">*</span></label>
+                        <input type="text" class="form-input" id="emergencyRelation" placeholder="Enter Relation" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Personal Mobile Number <span class="required">*</span></label>
+                        <input type="tel" class="form-input" id="mobile" placeholder="03XX-XXXXXXX" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Permanent Address (CNIC) <span class="required">*</span></label>
+                        <textarea class="form-textarea" id="address" placeholder="Enter Permanent Address" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Hostel Joining Date <span class="required">*</span></label>
+                        <input type="date" class="form-input" id="joinDate" required>
+                    </div>
+
+                    <div class="form-group" id="leaveDateGroup" style="display: none;">
+                        <label class="form-label">Hostel Leaving Date <span class="required">*</span></label>
+                        <input type="date" class="form-input" id="leaveDate">
+                    </div>
+
+                    <div class="divider"></div>
+                    <div class="section-label">Upload Pictures</div>
+
+                    <div class="form-group">
+                        <label class="form-label">CNIC Picture - 2x4 size <span class="required" id="cnicRequired">*</span></label>
+                        <div class="video-upload-wrapper" id="cnicWrapper">
+                            <div class="video-icon">📷</div>
+                            <p>Capture CNIC Picture</p>
+                            <div class="video-btns">
+                                <button type="button" class="btn-video" onclick="openCamera('cnic')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                                    Open Camera
+                                </button>
+                            </div>
+                            <div class="file-name" id="cnicFileName"></div>
+                            <img id="cnicPreview" class="image-preview" style="display:none;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Emp Card Picture - 2x4 size <span class="required" id="empCardRequired">*</span></label>
+                        <div class="video-upload-wrapper" id="empCardWrapper">
+                            <div class="video-icon">📷</div>
+                            <p>Capture Emp Card Picture</p>
+                            <div class="video-btns">
+                                <button type="button" class="btn-video" onclick="openCamera('empCard')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                                    Open Camera
+                                </button>
+                            </div>
+                            <div class="file-name" id="empCardFileName"></div>
+                            <img id="empCardPreview" class="image-preview" style="display:none;">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
+                </form>
+            </div>
+        </section>
+
+        <div id="accessDenied" class="access-denied hidden">
+            <h2>Access Denied</h2>
+            <p>You do not have permission to access this page.<br>Only Managers and Admins can access Hostel Accommodation.</p>
+            <button class="action-btn" onclick="window.location.href='Administration.html'" style="margin-top:1rem;">
+                Back to Administration
+            </button>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 STPL - Service Tyre Private Limited</p>
+        </footer>
+    </div>
+
+    <div class="modal-overlay" id="cameraModal">
+        <div class="modal-box">
+            <button class="close-modal" onclick="closeCamera()">&times;</button>
+            <h3>Capture Photo</h3>
+            <video id="cameraPreview" autoplay playsinline muted></video>
+            <div class="modal-actions">
+                <button class="btn-modal primary" onclick="capturePhoto()">Capture Photo</button>
+                <button class="btn-modal secondary" onclick="closeCamera()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function(){
+            function checkAuth() {
+                const userData = sessionStorage.getItem('currentUser');
+                if (!userData) {
+                    window.location.href = 'index.html';
+                    return false;
+                }
+                const currentUser = JSON.parse(userData);
+                
+                if (currentUser.role !== 'Manager' && currentUser.role !== 'Admin') {
+                    document.getElementById('formSection').classList.add('hidden');
+                    document.getElementById('buttonContainer').classList.add('hidden');
+                    document.getElementById('accessDenied').classList.remove('hidden');
+                    return false;
+                }
+                
+                return true;
+            }
+
+            let mediaStream = null;
+            let currentCameraType = null;
+            let cnicPicData = null;
+            let empCardPicData = null;
+            let editIndex = null;
+            let isEditMode = false;
+
+            const form = document.getElementById('hostelForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const successMsg = document.getElementById('successMsg');
+            const infoMsg = document.getElementById('infoMsg');
+            
+            const hostelName = document.getElementById('hostelName');
+            const empId = document.getElementById('empId');
+            const empName = document.getElementById('empName');
+            const department = document.getElementById('department');
+            const emergencyName = document.getElementById('emergencyName');
+            const emergencyRelation = document.getElementById('emergencyRelation');
+            const mobile = document.getElementById('mobile');
+            const address = document.getElementById('address');
+            const joinDate = document.getElementById('joinDate');
+            const leaveDate = document.getElementById('leaveDate');
+            const leaveDateGroup = document.getElementById('leaveDateGroup');
+
+            const cnicPreview = document.getElementById('cnicPreview');
+            const empCardPreview = document.getElementById('empCardPreview');
+            const cnicFileName = document.getElementById('cnicFileName');
+            const empCardFileName = document.getElementById('empCardFileName');
+            const cnicRequired = document.getElementById('cnicRequired');
+            const empCardRequired = document.getElementById('empCardRequired');
+
+            empId.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    searchEmployeeRecord();
+                }
+            });
+
+            empId.addEventListener('input', function() {
+                successMsg.classList.remove('active');
+                successMsg.textContent = '';
+            });
+
+            form.addEventListener('submit', handleSubmit);
+
+            function searchEmployeeRecord() {
+                const empIdValue = empId.value.trim();
+                if (!empIdValue) return;
+
+                const records = JSON.parse(localStorage.getItem('hostelRecords') || '[]');
+                
+                const activeRecord = records.find(r => 
+                    r.empId === empIdValue && !r.leaveDate
+                );
+
+                if (activeRecord) {
+                    editIndex = records.indexOf(activeRecord);
+                    isEditMode = true;
+                    
+                    hostelName.value = activeRecord.hostelName;
+                    empName.value = activeRecord.empName;
+                    department.value = activeRecord.department;
+                    emergencyName.value = activeRecord.emergencyName;
+                    emergencyRelation.value = activeRecord.emergencyRelation;
+                    mobile.value = activeRecord.mobile;
+                    address.value = activeRecord.address;
+                    joinDate.value = activeRecord.joinDate;
+                    
+                    if (activeRecord.cnicPic) {
+                        cnicPicData = activeRecord.cnicPic;
+                        cnicPreview.src = activeRecord.cnicPic;
+                        cnicPreview.style.display = 'block';
+                        cnicFileName.textContent = 'CNIC Picture loaded';
+                    }
+                    
+                    if (activeRecord.empCardPic) {
+                        empCardPicData = activeRecord.empCardPic;
+                        empCardPreview.src = activeRecord.empCardPic;
+                        empCardPreview.style.display = 'block';
+                        empCardFileName.textContent = 'Emp Card Picture loaded';
+                    }
+                    
+                    leaveDateGroup.style.display = 'block';
+                    cnicRequired.style.display = 'none';
+                    empCardRequired.style.display = 'none';
+                    
+                    infoMsg.textContent = 'Active record found. Enter Leaving Date to update.';
+                    infoMsg.classList.add('active');
+                } else {
+                    infoMsg.classList.remove('active');
+                    infoMsg.textContent = '';
+                }
+            }
+
+            window.openCamera = async function(type) {
+                currentCameraType = type;
+                
+                try {
+                    mediaStream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } },
+                        audio: false 
+                    });
+                    
+                    document.getElementById('cameraPreview').srcObject = mediaStream;
+                    document.getElementById('cameraPreview').style.display = 'block';
+                    document.getElementById('cameraModal').classList.add('active');
+                } catch(e) {
+                    alert('Camera access denied. Please allow camera permission and try again.');
+                }
+            };
+
+            window.closeCamera = function() {
+                stopStream();
+                document.getElementById('cameraModal').classList.remove('active');
+            };
+
+            function stopStream() {
+                if (mediaStream) {
+                    mediaStream.getTracks().forEach(t => t.stop());
+                    mediaStream = null;
+                }
+            }
+
+            window.capturePhoto = function() {
+                const video = document.getElementById('cameraPreview');
+                const canvas = document.createElement('canvas');
+                
+                canvas.width = 200;
+                canvas.height = 400;
+                
+                const ctx = canvas.getContext('2d');
+                
+                const videoAspect = video.videoWidth / video.videoHeight;
+                const targetAspect = 200 / 400;
+                
+                let sx, sy, sWidth, sHeight;
+                
+                if (videoAspect > targetAspect) {
+                    sHeight = video.videoHeight;
+                    sWidth = sHeight * targetAspect;
+                    sx = (video.videoWidth - sWidth) / 2;
+                    sy = 0;
+                } else {
+                    sWidth = video.videoWidth;
+                    sHeight = sWidth / targetAspect;
+                    sx = 0;
+                    sy = (video.videoHeight - sHeight) / 2;
+                }
+                
+                ctx.drawImage(video, sx, sy, sWidth, sHeight, 0, 0, 200, 400);
+                
+                const imageData = canvas.toDataURL('image/png');
+                
+                if (currentCameraType === 'cnic') {
+                    cnicPicData = imageData;
+                    cnicPreview.src = imageData;
+                    cnicPreview.style.display = 'block';
+                    cnicFileName.textContent = 'CNIC Picture captured';
+                    document.getElementById('cnicWrapper').classList.add('has-image');
+                } else if (currentCameraType === 'empCard') {
+                    empCardPicData = imageData;
+                    empCardPreview.src = imageData;
+                    empCardPreview.style.display = 'block';
+                    empCardFileName.textContent = 'Emp Card Picture captured';
+                    document.getElementById('empCardWrapper').classList.add('has-image');
+                }
+                
+                closeCamera();
+            };
+
+            function handleSubmit(e) {
+                e.preventDefault();
+                
+                const records = JSON.parse(localStorage.getItem('hostelRecords') || '[]');
+                
+                const record = {
+                    id: isEditMode ? records[editIndex].id : Date.now().toString(),
+                    hostelName: hostelName.value,
+                    empId: empId.value.trim(),
+                    empName: empName.value.trim(),
+                    department: department.value.trim(),
+                    emergencyName: emergencyName.value.trim(),
+                    emergencyRelation: emergencyRelation.value.trim(),
+                    mobile: mobile.value.trim(),
+                    address: address.value.trim(),
+                    joinDate: joinDate.value,
+                    leaveDate: leaveDate.value || null,
+                    cnicPic: cnicPicData,
+                    empCardPic: empCardPicData,
+                    submittedAt: new Date().toISOString()
+                };
+                
+                if (isEditMode) {
+                    records[editIndex] = record;
+                    successMsg.textContent = 'Record updated successfully!';
+                } else {
+                    records.push(record);
+                    successMsg.textContent = 'Record saved successfully!';
+                }
+                
+                localStorage.setItem('hostelRecords', JSON.stringify(records));
+                successMsg.classList.add('active');
+                
+                setTimeout(() => {
+                    resetForm();
+                }, 2000);
+            }
+
+            function resetForm() {
+                form.reset();
+                cnicPicData = null;
+                empCardPicData = null;
+                editIndex = null;
+                isEditMode = false;
+                
+                cnicPreview.style.display = 'none';
+                empCardPreview.style.display = 'none';
+                cnicFileName.textContent = '';
+                empCardFileName.textContent = '';
+                document.getElementById('cnicWrapper').classList.remove('has-image');
+                document.getElementById('empCardWrapper').classList.remove('has-image');
+                
+                leaveDateGroup.style.display = 'none';
+                cnicRequired.style.display = 'inline';
+                empCardRequired.style.display = 'inline';
+                
+                successMsg.classList.remove('active');
+                infoMsg.classList.remove('active');
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                checkAuth();
+            });
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1A1A1A">
+    <meta name="description" content="STPL - Service Tyre Private Limited Complaint Management System">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="STPL CMS">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <title>New Complaint - STPL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #FFFFFF;
+            --secondary-bg: #F5F5F5;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --accent-color: #1A1A1A;
+            --accent-hover: #333333;
+            --text-primary: #1A1A1A;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #DC2626;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: url('Gemini_Generated_Image_5sr3gj5sr3gj5sr3.png') repeat-y left center;
+            background-size: 150px auto;
+            background-color: #FFFFFF;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            padding: 1rem 1.5rem;
+            background: transparent;
+            
+            border-bottom: 1px solid var(--border-color);
+            animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .header-inner {
+            max-width: 720px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-logo img {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+        }
+
+        .logo-text h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .logo-text p {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        /* Button Container */
+        .button-container {
+            max-width: 720px;
+            margin: 0.5rem auto 0;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--border-color);
+            font-family: 'Inter', sans-serif;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .action-btn:hover { 
+            color: var(--accent-color); 
+            border-color: var(--accent-color);
+            background: rgba(26, 26, 26, 0.05);
+        }
+
+        .action-btn svg { width: 16px; height: 16px; }
+
+        /* Main Form Section */
+        .form-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 1rem 1rem 2rem;
+        }
+
+        .form-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 1.5rem;
+            max-width: 320px;
+            width: 92%;
+            margin: 0 auto;
+            width: 92%;
+            margin: 0 auto;
+            width: 100%;
+            box-shadow: 0 25px 80px var(--shadow);
+            animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .card-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+            margin: 1rem 0;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Form Group */
+        .form-group {
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.5px;
+        }
+
+        .required { color: var(--error); }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 0.7rem 0.85rem;
+            background: rgba(245, 245, 245, 0.8);
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+            background: #FFFFFF;
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder { color: var(--text-muted); }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+            line-height: 1.5;
+        }
+
+        .form-select {
+            appearance: none;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23666666' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 2rem;
+        }
+
+        .form-select option {
+            background: var(--secondary-bg);
+            color: var(--text-primary);
+        }
+
+        /* Video Upload Area */
+        .video-upload-wrapper {
+            border: 1.5px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: rgba(245, 245, 245, 0.5);
+        }
+
+        .video-upload-wrapper:hover {
+            border-color: var(--accent-color);
+            background: rgba(26, 26, 26, 0.03);
+        }
+
+        .video-upload-wrapper.has-video {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .video-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .video-upload-wrapper p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-upload-wrapper .file-name {
+            color: var(--success);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.3rem;
+        }
+
+        .video-btns {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-video {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.5rem 0.85rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .btn-video:hover {
+            background: rgba(26, 26, 26, 0.05);
+            border-color: var(--accent-color);
+        }
+
+        .btn-video svg { width: 14px; height: 14px; }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-box {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.25rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-box h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .modal-box .close-modal {
+            float: right;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover { color: var(--accent-color); }
+
+        #cameraPreview {
+            width: 100%;
+            border-radius: 10px;
+            background: #000;
+            max-height: 280px;
+            object-fit: cover;
+        }
+
+        .recording-badge {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            color: var(--error);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .recording-badge.active { display: flex; }
+
+        .recording-badge .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--error);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-modal {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-modal.primary {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            color: #fff;
+        }
+
+        .btn-modal.primary:hover {
+            box-shadow: 0 4px 15px rgba(26, 26, 26, 0.3);
+        }
+
+        .btn-modal.secondary {
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-modal.secondary:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 0.65rem;
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(26, 26, 26, 0.2);
+            margin-top: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(26, 26, 26, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Messages */
+        .msg {
+            padding: 0.65rem 0.85rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            display: none;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .msg.active { display: block; }
+
+        .msg.error {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            color: var(--error);
+        }
+
+        .msg.success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--success);
+        }
+
+        .image-preview {
+            width: 100%;
+            max-width: 180px;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            border: 1.5px solid var(--border-color);
+        }
+
+        footer {
+            background: transparent;
+            
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 480px) {
+            header { padding: 0.75rem; }
+            .brand-logo { width: 65px;
+            height: 65px; }
+            .logo-text h1 { font-size: 1.3rem; letter-spacing: 2px; }
+            .logo-text p { font-size: 0.6rem; letter-spacing: 1px; }
+            .bg-pattern {
+                background-size: 80px auto;
+            }
+            .form-card, .login-container, .signup-container, .dashboard-card {
+                max-width: 260px !important;
+                width: 88% !important;
+                padding: 1rem !important;
+                border-radius: 14px !important;
+            }
+            .form-input, .form-select, .login-btn, .signup-btn, .submit-btn, .btn-submit {
+                padding: 0.6rem 0.75rem !important;
+                font-size: 0.85rem !important;
+            }
+            .form-label {
+                font-size: 0.75rem !important;
+                margin-bottom: 0.25rem !important;
+            }
+            .form-group {
+                margin-bottom: 0.6rem !important;
+            }
+            .card-title, .login-title, .signup-title, .dashboard-title {
+                font-size: 1.1rem !important;
+            }
+            .card-subtitle, .login-subtitle, .signup-subtitle, .dashboard-subtitle {
+                font-size: 0.75rem !important;
+            }
+            .action-btn, .back-btn, .logout-btn, .nav-btn {
+                padding: 0.5rem 0.75rem !important;
+                font-size: 0.8rem !important;
+            }
+            .nav-btn-title {
+                font-size: 0.8rem !important;
+            }
+            .nav-btn-subtitle {
+                font-size: 0.7rem !important;
+            }
+            .divider {
+                margin: 0.75rem 0 !important;
+            }
+            .video-upload-wrapper, .video-upload-card {
+                padding: 0.75rem !important;
+            }
+            .upload-icon, .video-icon {
+                font-size: 1.5rem !important;
+            }
+            .upload-text, .video-upload-wrapper p {
+                font-size: 0.75rem !important;
+            }
+            .upload-label, .btn-video {
+                padding: 0.4rem 0.75rem !important;
+                font-size: 0.75rem !important;
+            }
+            footer {
+                padding: 0.75rem !important;
+            }
+            footer p {
+                font-size: 0.7rem !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .bg-pattern {
+                background-size: 120px auto;
+            }
+            .form-card, .login-container, .signup-container, .dashboard-card {
+                max-width: 300px;
+                width: 90%;
+            }
+        }
+        }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-inner">
+                <div class="brand-logo">
+                    <img src="logo.png" alt="STPL Logo">
+                </div>
+                <div class="logo-text">
+                    <h1>STPL</h1>
+                    <p>Service Tyre Private Limited</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Button Container -->
+        <div class="button-container" id="buttonContainer">
+            <button class="action-btn" onclick="goBack()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+                Back
+            </button>
+            <button class="action-btn" onclick="window.location.href='Submitted-complaints.html'">
+                View Complaints
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </button>
+        </div>
+
+        <!-- Main Form Section -->
+        <section class="form-section" id="formSection">
+            <div class="form-card">
+                <div class="card-header">
+                    <h2 class="card-title">New Complaint</h2>
+                    <p class="card-subtitle">Submit a New Complaint</p>
+                </div>
+
+                <div class="msg success" id="successMsg"></div>
+                <div class="info-msg" id="infoMsg" style="display:none;"></div>
+
+                <form id="complaintForm">
+                    <div class="form-group">
+                        <label class="form-label">Complaint Type <span class="required">*</span></label>
+                        <select class="form-select" id="complaintType" required>
+                            <option value="">Select Complaint Type</option>
+                            <option value="Hostel">Hostel</option>
+                            <option value="IT">IT</option>
+                            <option value="HR">HR</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Maintenance">Maintenance</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Emp ID <span class="required">*</span></label>
+                        <input type="text" class="form-input" id="empId" placeholder="Enter Employee ID" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Emp Name <span class="required">*</span></label>
+                        <input type="text" class="form-input" id="empName" placeholder="Enter Employee Name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Department <span class="required">*</span></label>
+                        <input type="text" class="form-input" id="department" placeholder="Enter Department" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Complaint Description <span class="required">*</span></label>
+                        <textarea class="form-textarea" id="complaintDescription" placeholder="Describe your complaint in detail" required></textarea>
+                    </div>
+
+                    <div class="divider"></div>
+                    <div class="section-label">Video Evidence</div>
+
+                    <div class="form-group">
+                        <div class="video-upload-wrapper" id="videoWrapper">
+                            <div class="video-icon">🎥</div>
+                            <p>Record or Upload Video</p>
+                            <div class="video-btns">
+                                <button type="button" class="btn-video" onclick="openCamera()">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                                    Open Camera
+                                </button>
+                                <button type="button" class="btn-video" onclick="document.getElementById('videoFile').click()">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                    Upload File
+                                </button>
+                            </div>
+                            <input type="file" id="videoFile" accept="video/*" style="display:none" onchange="handleFileUpload(this)">
+                            <div class="file-name" id="videoFileName"></div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">Submit Complaint</button>
+                </form>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 STPL - Service Tyre Private Limited</p>
+        </footer>
+    </div>
+
+    <!-- Camera Modal -->
+    <div class="modal-overlay" id="cameraModal">
+        <div class="modal-box">
+            <button class="close-modal" onclick="closeCamera()">&times;</button>
+            <h3>Record Video</h3>
+            <video id="cameraPreview" autoplay playsinline muted></video>
+            <div class="recording-badge" id="recordingBadge">
+                <span class="dot"></span>
+                <span>RECORDING</span>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-modal primary" id="recordBtn" onclick="toggleRecording()">Start Recording</button>
+                <button class="btn-modal secondary" onclick="closeCamera()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function(){
+            function checkAuth() {
+                const userData = sessionStorage.getItem('currentUser');
+                if (!userData) {
+                    window.location.href = 'index.html';
+                    return false;
+                }
+                return true;
+            }
+
+            let mediaStream = null;
+            let mediaRecorder = null;
+            let recordedChunks = [];
+            let isRecording = false;
+            let videoBlob = null;
+            let videoUrl = null;
+
+            const form = document.getElementById('complaintForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const successMsg = document.getElementById('successMsg');
+            
+            const complaintType = document.getElementById('complaintType');
+            const empId = document.getElementById('empId');
+            const empName = document.getElementById('empName');
+            const department = document.getElementById('department');
+            const complaintDescription = document.getElementById('complaintDescription');
+            const videoWrapper = document.getElementById('videoWrapper');
+            const videoFileName = document.getElementById('videoFileName');
+
+            form.addEventListener('input', validateForm);
+            form.addEventListener('change', validateForm);
+            form.addEventListener('submit', handleSubmit);
+
+            window.openCamera = async function() {
+                try {
+                    mediaStream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } },
+                        audio: true 
+                    });
+                    
+                    document.getElementById('cameraPreview').srcObject = mediaStream;
+                    document.getElementById('cameraPreview').style.display = 'block';
+                    document.getElementById('cameraModal').classList.add('active');
+                    
+                    isRecording = false;
+                    recordedChunks = [];
+                    updateRecordButton();
+                } catch(e) {
+                    alert('Camera access denied. Please allow camera permission and try again.');
+                }
+            };
+
+            window.closeCamera = function() {
+                stopStream();
+                document.getElementById('cameraModal').classList.remove('active');
+            };
+
+            function stopStream() {
+                if (mediaStream) {
+                    mediaStream.getTracks().forEach(t => t.stop());
+                    mediaStream = null;
+                }
+            }
+
+            function updateRecordButton() {
+                const btn = document.getElementById('recordBtn');
+                const badge = document.getElementById('recordingBadge');
+                
+                if (isRecording) {
+                    btn.textContent = 'Stop Recording';
+                    badge.classList.add('active');
+                } else {
+                    btn.textContent = 'Start Recording';
+                    badge.classList.remove('active');
+                }
+            }
+
+            window.toggleRecording = function() {
+                if (!isRecording) {
+                    recordedChunks = [];
+                    mediaRecorder = new MediaRecorder(mediaStream);
+                    
+                    mediaRecorder.ondataavailable = function(e) {
+                        if (e.data.size > 0) recordedChunks.push(e.data);
+                    };
+                    
+                    mediaRecorder.onstop = function() {
+                        videoBlob = new Blob(recordedChunks, { type: 'video/webm' });
+                        videoUrl = URL.createObjectURL(videoBlob);
+                        
+                        videoWrapper.classList.add('has-video');
+                        videoFileName.textContent = 'Video recorded successfully';
+                        
+                        let preview = document.getElementById('videoPreview');
+                        if (!preview) {
+                            preview = document.createElement('video');
+                            preview.id = 'videoPreview';
+                            preview.className = 'image-preview';
+                            preview.controls = true;
+                            videoWrapper.appendChild(preview);
+                        }
+                        preview.src = videoUrl;
+                        preview.style.display = 'block';
+                        
+                        closeCamera();
+                        validateForm();
+                    };
+                    
+                    mediaRecorder.start();
+                    isRecording = true;
+                    updateRecordButton();
+                } else {
+                    mediaRecorder.stop();
+                    isRecording = false;
+                    updateRecordButton();
+                }
+            };
+
+            window.handleFileUpload = function(input) {
+                if (input.files && input.files[0]) {
+                    const file = input.files[0];
+                    videoBlob = file;
+                    videoUrl = URL.createObjectURL(file);
+                    
+                    videoWrapper.classList.add('has-video');
+                    videoFileName.textContent = file.name;
+                    
+                    let preview = document.getElementById('videoPreview');
+                    if (!preview) {
+                        preview = document.createElement('video');
+                        preview.id = 'videoPreview';
+                        preview.className = 'image-preview';
+                        preview.controls = true;
+                        videoWrapper.appendChild(preview);
+                    }
+                    preview.src = videoUrl;
+                    preview.style.display = 'block';
+                    
+                    validateForm();
+                }
+            };
+
+            function validateForm() {
+                const isValid = complaintType.value && 
+                               empId.value.trim() && 
+                               empName.value.trim() && 
+                               department.value.trim() && 
+                               complaintDescription.value.trim();
+                
+                submitBtn.disabled = !isValid;
+            }
+
+            function handleSubmit(e) {
+                e.preventDefault();
+                
+                const complaints = JSON.parse(localStorage.getItem('complaints') || '[]');
+                
+                const complaint = {
+                    id: Date.now().toString(),
+                    complaintType: complaintType.value,
+                    empId: empId.value.trim(),
+                    empName: empName.value.trim(),
+                    department: department.value.trim(),
+                    complaintDescription: complaintDescription.value.trim(),
+                    videoData: videoUrl || null,
+                    status: 'Pending',
+                    submittedAt: new Date().toISOString(),
+                    submittedBy: JSON.parse(sessionStorage.getItem('currentUser')).empId
+                };
+                
+                complaints.push(complaint);
+                localStorage.setItem('complaints', JSON.stringify(complaints));
+                
+                successMsg.textContent = 'Complaint submitted successfully!';
+                successMsg.classList.add('active');
+                
+                setTimeout(() => {
+                    resetForm();
+                }, 2000);
+            }
+
+            function resetForm() {
+                form.reset();
+                videoBlob = null;
+                videoUrl = null;
+                videoWrapper.classList.remove('has-video');
+                videoFileName.textContent = '';
+                
+                const preview = document.getElementById('videoPreview');
+                if (preview) preview.style.display = 'none';
+                
+                successMsg.classList.remove('active');
+                submitBtn.disabled = true;
+            }
+
+            window.goBack = function() {
+                const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+                if (currentUser.role === 'Employee') {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    window.location.href = 'Administration.html';
+                }
+            };
+
+            document.addEventListener('DOMContentLoaded', function() {
+                checkAuth();
+                
+                const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+                if (currentUser) {
+                    empId.value = currentUser.empId;
+                    empName.value = currentUser.fullName;
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
