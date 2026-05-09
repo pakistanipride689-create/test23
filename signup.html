@@ -190,13 +190,21 @@
         .form-input::placeholder { color: var(--text-muted); }
 
         .form-select {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            background: rgba(245, 245, 245, 0.8);
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
             cursor: pointer;
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666666' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 1rem center;
             padding-right: 2.5rem;
-            color: var(--text-primary);
+            transition: all 0.3s ease;
         }
 
         .form-select option {
@@ -319,8 +327,13 @@
                 padding: 1rem !important;
                 border-radius: 14px !important;
             }
-            .form-input, .form-select, .login-btn, .signup-btn, .submit-btn, .btn-submit {
+            .form-input, .login-btn, .signup-btn, .submit-btn, .btn-submit {
                 padding: 0.6rem 0.75rem !important;
+                font-size: 0.85rem !important;
+            }
+            .form-select {
+                padding: 0.6rem 0.75rem !important;
+                padding-right: 2.5rem !important;
                 font-size: 0.85rem !important;
             }
             .form-label {
